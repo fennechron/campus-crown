@@ -6,7 +6,17 @@ const SearchIcon = () => (
     </svg>
 );
 
-export default function BottomNav({ onPrev, onNext, onSearchOpen, isFirst, isLast, votedCount, totalCategories, isVoted, isSplit }) {
+export default function BottomNav({ onPrev, onNext, onSearchOpen, isFirst, isLast, votedCount, totalRequiredVotes, isVoted, isSplit }) {
+    const handlePrev = (e) => {
+        console.log("BottomNav: Back clicked", { isFirst });
+        onPrev(e);
+    };
+
+    const handleNext = (e) => {
+        console.log("BottomNav: Next clicked", { isLast, votedCount, totalRequiredVotes });
+        onNext(e);
+    };
+
     return (
         <div className="bottom-nav-container">
             <motion.div
@@ -18,7 +28,7 @@ export default function BottomNav({ onPrev, onNext, onSearchOpen, isFirst, isLas
                 {/* Back Button */}
                 <button
                     className="bottom-nav-btn nav-prev"
-                    onClick={onPrev}
+                    onClick={handlePrev}
                     disabled={isFirst}
                     aria-label="Previous category"
                 >
@@ -70,8 +80,8 @@ export default function BottomNav({ onPrev, onNext, onSearchOpen, isFirst, isLas
                 {/* Next/Submit Button */}
                 <button
                     className={`bottom-nav-btn nav-next ${isLast ? 'submit-active' : ''}`}
-                    onClick={onNext}
-                    disabled={isLast && votedCount < totalCategories}
+                    onClick={handleNext}
+                    disabled={isLast && votedCount < totalRequiredVotes}
                     style={isLast ? { background: 'white', color: 'black', width: 'auto', padding: '0 20px' } : {}}
                 >
                     {isLast ? (

@@ -143,11 +143,19 @@ export default function CategoryView({
 
         const q = searchTerm.toLowerCase().trim();
         if (!q) return list;
-        return list.filter(n =>
-            n.name.toLowerCase().includes(q) ||
-            n.tagline?.toLowerCase().includes(q) ||
-            n.id === "none"
+
+        const startsWithMatches = list.filter(n =>
+            n.name.toLowerCase().startsWith(q)
         );
+
+        const otherMatches = list.filter(n =>
+            !n.name.toLowerCase().startsWith(q) &&
+            (n.name.toLowerCase().includes(q) || n.tagline?.toLowerCase().includes(q))
+        );
+
+        // Always keep 'none' if it matches or if we want it at the end
+        // But here we only filter by search query.
+        return [...startsWithMatches, ...otherMatches].filter(n => n.id !== "none").concat(list.filter(n => n.id === "none"));
     }, [category.nominees, searchTerm, category.splitGender, category.gender, activeTab]);
 
     return (

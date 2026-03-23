@@ -36,12 +36,19 @@ export default function GlobalSearch({ nominees: propNominees, onJumpToCategory,
             setResults([]);
             return;
         }
-        const found = nominees.filter(
-            (n) =>
-                n.name.toLowerCase().includes(q) ||
-                n.tagline?.toLowerCase().includes(q)
-        ).slice(0, 10);
-        setResults(found);
+
+        // Prioritize matches that START with the search query
+        const startsWithMatches = nominees.filter(n =>
+            n.name.toLowerCase().startsWith(q)
+        );
+
+        // Include matches that contain the query but don't start with it
+        const containsMatches = nominees.filter(n =>
+            !n.name.toLowerCase().startsWith(q) &&
+            (n.name.toLowerCase().includes(q) || n.tagline?.toLowerCase().includes(q))
+        );
+
+        setResults([...startsWithMatches, ...containsMatches].slice(0, 10));
     }, [query, nominees]);
 
     return (

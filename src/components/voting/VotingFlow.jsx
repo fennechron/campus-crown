@@ -71,6 +71,7 @@ import BottomNav from "../layout/BottomNav"; export default function VotingFlow(
     }, [currentCategory.id]);
 
     const handleNext = useCallback(() => {
+        console.log("VotingFlow: handleNext", { currentIndex, totalCategories });
         if (currentIndex < totalCategories - 1) {
             setDirection(1);
             setCurrentIndex((i) => i + 1);
@@ -82,6 +83,7 @@ import BottomNav from "../layout/BottomNav"; export default function VotingFlow(
     }, [currentIndex, totalCategories, votedCount, votes, userId]);
 
     const handlePrev = useCallback(() => {
+        console.log("VotingFlow: handlePrev", { currentIndex });
         if (currentIndex > 0) {
             setDirection(-1);
             setCurrentIndex((i) => i - 1);
@@ -139,7 +141,7 @@ import BottomNav from "../layout/BottomNav"; export default function VotingFlow(
                 isFirst={currentIndex === 0}
                 isLast={currentIndex === totalCategories - 1}
                 votedCount={votedCount}
-                totalCategories={totalCategories}
+                totalRequiredVotes={totalRequiredVotes}
                 isVoted={currentCategory.splitGender
                     ? (votes[`${currentCategory.id}-Male`] && votes[`${currentCategory.id}-Female`])
                     : !!votes[currentCategory.id]
