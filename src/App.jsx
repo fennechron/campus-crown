@@ -14,7 +14,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/vote" element={<VotingPage />} />
+        {/* <Route path="/vote" element={<VotingPage />} /> */}
         <Route path="/results" element={<ResultsPage />} />
         <Route path="/results/:categoryId" element={<ResultsRevealPage />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
