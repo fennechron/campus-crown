@@ -107,42 +107,7 @@ export default function VotingPage() {
 
     return (
         <div className="page page-with-bottom-nav">
-            <Header
-                currentIndex={currentIndex}
-                totalCategories={dynamicCategories.length}
-                showProgress={true}
-                onSearchOpen={() => setSearchOpen(true)}
-            />
-            <VotingFlow
-                userId={userId}
-                categories={dynamicCategories}
-                onCategoryChange={setCurrentIndex}
-                jumpToIndex={jumpIndex}
-                onJumpHandled={() => setJumpIndex(null)}
-                onSearchOpen={() => setSearchOpen(true)}
-                onRegisterSelect={setSelectNominee}
-                onGenderFilterChange={setGenderFilter}
-            />
-
-            <AnimatePresence>
-                {searchOpen && (
-                    <GlobalSearch
-                        nominees={(() => {
-                            let curr = dynamicCategories[currentIndex];
-                            let list = curr?.nominees || [];
-                            if (curr?.splitGender && genderFilter) {
-                                return list.filter(n => n.gender === genderFilter);
-                            }
-                            return list;
-                        })()}
-                        onJumpToCategory={handleJumpToCategory}
-                        onClose={() => setSearchOpen(false)}
-                        onSelectNominee={(id) => {
-                            if (selectNominee) selectNominee(id);
-                        }}
-                    />
-                )}
-            </AnimatePresence>
+             <h1>Voting Closed</h1>
             <Footer />
         </div>
     );
